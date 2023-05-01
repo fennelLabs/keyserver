@@ -1,0 +1,26 @@
+@hostname = localhost
+@port = 1235
+
+###
+# @name Post Test Key
+# @no-cookie-jar
+POST /api/keys/
+Host: {{hostname}}:{{port}}
+Content-Type: application/json
+
+{
+    "user": "thisisatest",
+    "mnemonic": "this is a test mnemonic"
+}
+
+###
+# @name Get all keys
+# @no-cookie-jar
+GET /api/keys/
+Host: {{hostname}}:{{port}}
+
+###
+# @name Get Test Key
+# @no-cookie-jar
+GET /api/keys/?user=thisisatest
+Host: {{hostname}}:{{port}}
