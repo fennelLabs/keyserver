@@ -28,9 +28,9 @@ resource "google_compute_instance" "fennel-keyserver" {
   network_interface {
     network    = "whiteflag-sandbox-vpc"
     subnetwork = "public-subnet"
-     #access_config {
-     #nat_ip = google_compute_address.fennel-subservice-ip.address
-     #}
+     access_config {
+      nat_ip = google_compute_address.fennel-keyserver-ip.address
+     }
   }
 
   metadata_startup_script = <<EOF
