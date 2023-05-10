@@ -35,12 +35,13 @@ resource "google_compute_instance" "fennel-keyserver" {
 
   # Setting the startup script to start the Docker image
   metadata_startup_script = <<EOF
-#!/bin/bash
-sudo docker run \
-  -p 8080:8080 \
-  --env ENV_VAR_NAME=ENV_VAR_VALUE \
-  "us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-keyserver:latest"
-EOF
+    #!/bin/bash
+    apt-get update
+    apt-get install -y docker.io
+    gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin us-east1-docker.pkg.dev
+    docker pull us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-keyserver:latest
+    docker run -dit -p 1234:1234 --name fennel-keyserver us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-keyserver:latest
+  EOF  
 
   service_account {
     scopes = ["cloud-platform"]
