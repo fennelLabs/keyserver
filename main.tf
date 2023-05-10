@@ -3,12 +3,12 @@ module "gce-container" {
   version = "~> 2.0"  # Upgrade the version if necessary.
 
   container = {
-    image = "us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-api:latest"
+    image = "us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-keyserver:latest"
   }
 }
 
-resource "google_compute_instance" "fennel-api" {
-  name         = "fennel-api-instance"
+resource "google_compute_instance" "fennel-keyserver" {
+  name         = "fennel-keyserver-instance"
   machine_type = "e2-small"
   zone         = "us-east1-b"
   
@@ -39,7 +39,7 @@ resource "google_compute_instance" "fennel-api" {
 sudo docker run \
   -p 8080:8080 \
   --env ENV_VAR_NAME=ENV_VAR_VALUE \
-  "us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-api:latest"
+  "us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-keyserver:latest"
 EOF
 
   service_account {
