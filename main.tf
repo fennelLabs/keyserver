@@ -7,6 +7,14 @@ module "gce-container" {
   }
 }
 
+resource "google_storage_bucket_object" "startup" {
+  name   = "keyserver-terraform-start.sh"
+  bucket = "whiteflag-00admin"
+  source = "keyserver-terraform-start.sh"
+
+  content_type = "text/plain"
+}
+
 resource "google_compute_address" "fennel-keyserver-ip" {
   name = "fennel-keyserver-ip"
 }
