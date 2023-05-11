@@ -9,7 +9,7 @@ module "gce-container" {
 
 resource "google_storage_bucket_object" "startup" {
   name   = "keyserver-terraform-start.sh"
-  bucket = "whiteflag-00admin"
+  bucket = "whiteflag-0-admin"
   source = "keyserver-terraform-start.sh"
 
   content_type = "text/plain"
