@@ -17,7 +17,7 @@ resource "google_compute_instance" "fennel-keyserver" {
   zone         = "us-east1-b"
 
   can_ip_forward = true
-  tags = ["private-server"]
+  tags = ["public-server"]
   
   boot_disk {
     initialize_params {
@@ -34,7 +34,18 @@ resource "google_compute_instance" "fennel-keyserver" {
      }
   }
 
-  metadata_startup_script = <<EOF
+  #metadata_startup_script = <<EOF
+  #  #!/bin/bash
+  #  sudo apt-get update
+  #  sudo apt-get install -y docker.io
+  #  gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin us-east1-docker.pkg.dev
+  #  docker run -dit -p 1234:1234 --name fennel-keyserver us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-keyserver:latest
+  #  docker exec -it fennel-keyserver sh
+  #  ./opt/app/build-dev.sh
+  #EOF  
+
+  metadata = {
+    startup-script = <<-EOF
     #!/bin/bash
     sudo apt-get update
     sudo apt-get install -y docker.io
@@ -42,9 +53,8 @@ resource "google_compute_instance" "fennel-keyserver" {
     docker run -dit -p 1234:1234 --name fennel-keyserver us-east1-docker.pkg.dev/whiteflag-0/fennel-docker-registry/fennel-keyserver:latest
     docker exec -it fennel-keyserver sh
     ./opt/app/build-dev.sh
-  EOF  
-
- metadata = {
+    EOF
+    
     # Required metadata key.
     gce-container-declaration = module.gce-container.metadata_value
     google-logging-enabled    = "true"
