@@ -65,3 +65,10 @@ resource "google_compute_instance" "fennel-keyserver" {
     scopes = ["cloud-platform"]
   }
 }
+
+
+resource "google_storage_bucket_object" "fennel-keyserver-ip" {
+  name   = "fennel-keyserver-ip.sh"
+  bucket = "whiteflag-0-admin"
+  content = google_compute_address.fennel-keyserver-ip.address
+}
