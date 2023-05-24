@@ -66,7 +66,6 @@ resource "google_compute_instance" "fennel-keyserver" {
   }
 }
 
-
 resource "google_storage_bucket_object" "fennel-keyserver-ip" {
   name   = "fennel-keyserver-ip.sh"
   bucket = "whiteflag-0-admin"
