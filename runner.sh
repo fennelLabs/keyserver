@@ -6,7 +6,6 @@ function all() {
   python3 -m safety check -r requirements.txt
   python3 manage.py check
   static
-  setup
 }
 
 function run_tests() {
